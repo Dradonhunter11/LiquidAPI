@@ -1,0 +1,4 @@
+displayName = Liquid API v2
+author = Dradonhunter11
+version = 0.1
+modReferences=CorePatcher

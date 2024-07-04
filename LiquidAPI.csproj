@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- Import tModLoader mod properties -->
+	<Import Project="..\tModLoader.targets" />
+
+	<!-- General -->
+	<PropertyGroup>
+
+	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="Items\ExempleBucket.png" />
+	  <None Remove="Liquids\ExempleLiquid.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Krafs.Publicizer" Version="2.2.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\CorePatcher\CorePatcher.csproj" />
+
+		<Publicize Include="tModLoader:Terraria.GameContent.Liquid.LiquidRenderer.WATERFALL_LENGTH" />
+		<Publicize Include="tModLoader:Terraria.GameContent.Liquid.LiquidRenderer.DEFAULT_OPACITY" />
+		<Publicize Include="tModLoader:Terraria.GameContent.Liquid.LiquidRenderer.WAVE_MASK_STRENGTH" />
+		<Publicize Include="tModLoader:Terraria.GameContent.Liquid.LiquidRenderer.VISCOSITY_MASK" />
+
+		<Publicize Include="tModLoader:Terraria.ModLoader.ModBlockType.Type" />
+		<Publicize Include="tModLoader:Terraria.ModLoader.IO.TileIO" />
+
+		<Publicize Include="tModLoader:Terraria.ModLoader.IO.TileIO+IOImpl.LoadedBlockCount" />
+		<Publicize Include="tModLoader:Terraria.ModLoader.IO.TileIO+IOImpl.LoadedBlocks" />
+		<Publicize Include="tModLoader:Terraria.ModLoader.IO.TileIO+IOImpl.ConvertBlockToEntry" />
+		<Publicize Include="tModLoader:Terraria.ModLoader.IO.TileIO+IOImpl.ReadData" />
+		<Publicize Include="tModLoader:Terraria.ModLoader.IO.TileIO+IOImpl.GetModBlockType" />
+		<Publicize Include="tModLoader:Terraria.ModLoader.IO.TileIO+IOImpl.WriteData" />
+
+		<Publicize Include="tModLoader:Terraria.ModLoader.MapLoader.initialized" />
+		
+
+		<Publicize Include="tModLoader:Terraria.ModLoader.MapEntry" />
+		<Publicize Include="tModLoader:Terraria.ModLoader.MapEntry..ctor" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Assets\" />
+	</ItemGroup>
+	<PropertyGroup>
+		<PublicizerClearCacheOnClean>true</PublicizerClearCacheOnClean>
+	</PropertyGroup>
+	<!-- References -->
+</Project>

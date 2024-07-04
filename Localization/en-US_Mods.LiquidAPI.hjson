@@ -1,0 +1,6 @@
+Items: {
+	ExempleBucket: {
+		DisplayName: Exemple Bucket
+		Tooltip: ""
+	}
+}
