@@ -9,7 +9,12 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="Items\ExempleBucket.png" />
-	  <None Remove="Liquids\ExempleLiquid.png" />
+	  <None Remove="LICENSE" />
+	  <None Remove="Liquids\WeirdLiquid.png" />
+	  <None Remove="Liquids\WhiteLiquid.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <AdditionalFiles Include="LICENSE" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Krafs.Publicizer" Version="2.2.1">
@@ -19,6 +24,8 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\CorePatcher\CorePatcher.csproj" />
+
+		<Publicize Include="tModLoader" />
 
 		<Publicize Include="tModLoader:Terraria.GameContent.Liquid.LiquidRenderer.WATERFALL_LENGTH" />
 		<Publicize Include="tModLoader:Terraria.GameContent.Liquid.LiquidRenderer.DEFAULT_OPACITY" />

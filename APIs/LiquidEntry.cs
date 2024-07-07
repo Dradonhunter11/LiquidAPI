@@ -20,21 +20,21 @@ namespace LiquidAPI.APIs
         {
         }
 
-        protected override int LoadedBlockCount => LiquidLoader.liquids.Count;
+        public override int LoadedBlockCount => LiquidLoader.liquids.Count;
 
-        protected override IEnumerable<ModLiquid> LoadedBlocks => LiquidLoader.liquids;
+        public override IEnumerable<ModLiquid> LoadedBlocks => LiquidLoader.liquids;
 
-        protected override LiquidEntry ConvertBlockToEntry(ModLiquid liquid) => new LiquidEntry(liquid);
+        public override LiquidEntry ConvertBlockToEntry(ModLiquid liquid) => new LiquidEntry(liquid);
 
-        protected override ushort GetModBlockType(Tile tile) => tile.LiquidType >= ModLiquidID.Count ? (ushort)tile.LiquidType : (ushort)0;
+        public override ushort GetModBlockType(Tile tile) => tile.LiquidType >= ModLiquidID.Count ? (ushort)tile.LiquidType : (ushort)0;
 
-        protected override void ReadData(Tile tile, LiquidEntry entry, BinaryReader reader)
+        public override void ReadData(Tile tile, LiquidEntry entry, BinaryReader reader)
         {
             tile.LiquidType = entry.loadedType;
             tile.LiquidAmount = reader.ReadByte();
         }
 
-        protected override void WriteData(BinaryWriter writer, Tile tile, LiquidEntry entry)
+        public override void WriteData(BinaryWriter writer, Tile tile, LiquidEntry entry)
         {
             writer.Write(entry.loadedType);
             writer.Write(tile.LiquidAmount);
@@ -56,7 +56,7 @@ namespace LiquidAPI.APIs
     {
         public static Func<TagCompound, LiquidEntry> DESERIALIZER = tag => new LiquidEntry(tag);
 
-        public LiquidEntry(ModBlockType block) : base(block)
+        public LiquidEntry(ModLiquid block) : base(block)
         {
         }
 
@@ -66,7 +66,7 @@ namespace LiquidAPI.APIs
 
         public override string DefaultUnloadedType => ModContent.GetInstance<UnloadedLiquid>().FullName;
 
-        protected override string GetUnloadedType(ushort type) => DefaultUnloadedType;
+        public override string GetUnloadedType(ushort type) => DefaultUnloadedType;
 
         public static TypeDefinition GetTypeDefinition()
         {

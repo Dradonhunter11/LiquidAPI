@@ -11,6 +11,7 @@ using Terraria;
 using Terraria.GameContent.Liquid;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Core;
 
 namespace LiquidAPI.APIs
 {
@@ -43,6 +44,8 @@ namespace LiquidAPI.APIs
 
         internal static void ResizeArray(bool unloading = false)
         {
+            LoaderUtils.ResetStaticMembers(typeof(ModLiquidID));
+
             Resize<LiquidRenderer, int>("WATERFALL_LENGTH", nextLiquid, System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
             Resize<LiquidRenderer, float>("DEFAULT_OPACITY", nextLiquid, System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
             Resize<LiquidRenderer, byte>("WAVE_MASK_STRENGTH", nextLiquid + 1, System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
