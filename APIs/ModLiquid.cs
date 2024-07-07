@@ -2,12 +2,15 @@
 using LiquidAPI.Patches;
 using LiquidAPI.Systems;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria.GameContent;
 using Terraria.GameContent.Liquid;
 using Terraria.ID;
 using Terraria.Localization;
@@ -61,9 +64,12 @@ namespace LiquidAPI.APIs
         public sealed override void SetupContent()
         {
             if(!PatchLoader.DetectPatchedAssembly()) return;
-            SetStaticDefaults();
+            LiquidTextureAssets.Liquid[Type][0] = ModContent.Request<Texture2D>(Texture, (AssetRequestMode)2);
+			SetStaticDefaults();
             ModLiquidID.Search.Add(FullName, Type);
-        }
+			//LiquidTextureAssets.LiquidSlope[Type][0] = ModContent.Request<Texture2D>(BlockTextur, (AssetRequestMode)2);
+			//LiquidTextureAssets.LiquidBlock[Type][0] = ModContent.Request<Texture2D>(Texture, (AssetRequestMode)2);
+		}
 
         public override void SetStaticDefaults()
         {

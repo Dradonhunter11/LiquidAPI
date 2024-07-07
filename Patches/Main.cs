@@ -9,19 +9,27 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using LiquidAPI.IO;
+using LiquidAPI.Systems;
 
 namespace LiquidAPI.Patches
 {
-    [PatchType("Terraria.Main")]
-    // [PatchType(typeof(Terraria.Main))] // coming in the next core patcher update
-    internal class MainPatch : ModCorePatch
-    {
-        private static void PatchLiquidType(TypeDefinition main, AssemblyDefinition terraria)
-        {
-            var drawWaters = main.Methods.FirstOrDefault(i => i.Name == "DrawWaters");
+	[PatchType("Terraria.Main")]
+	// [PatchType(typeof(Terraria.Main))] // coming in the next core patcher update
+	internal class MainPatch : ModCorePatch
+	{
+		private static void RemoveLiquidRendering(TypeDefinition type, AssemblyDefinition terraria)
+		{
+			var method = type.Methods.FirstOrDefault(m => m.Name == "DrawWaters");
 
-            drawWaters.Body.Instructions.Clear();
-            drawWaters.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
-        }
-    }
+			ILCursor ilCursor = new ILCursor(new ILContext(method));
+			method.Body.Instructions.Clear();
+			ilCursor.EmitLdarg1();
+			ilCursor.EmitDelegate((bool isBackground) =>
+			{
+				LiquidRendering.instance.InitateDrawLiquids(isBackground);
+			});
+			ilCursor.EmitRet();
+		}
+	}
+
 }
