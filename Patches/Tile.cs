@@ -12,6 +12,19 @@ using LiquidAPI.IO;
 
 namespace LiquidAPI.Patches
 {
+    [PatchType("Terraria.Main")]
+    // [PatchType(typeof(Terraria.Main))] // coming in the next core patcher update
+    internal class MainPatch : ModCorePatch
+    {
+        private static void PatchLiquidType(TypeDefinition main, AssemblyDefinition terraria)
+        {
+            var drawWaters = main.Methods.FirstOrDefault(i => i.Name == "DrawWaters");
+
+            drawWaters.Body.Instructions.Clear();
+            drawWaters.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
+        }
+    }
+
     [PatchType("Terraria.Tile")]
     internal class TilePatch : ModCorePatch
     {

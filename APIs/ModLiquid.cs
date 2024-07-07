@@ -72,7 +72,7 @@ namespace LiquidAPI.APIs
             DefaultOpacity = 0.6f;
         }
 
-        protected sealed override void Register()
+        public sealed override void Register()
         {
             if (!PatchLoader.DetectPatchedAssembly()) return;
             ModTypeLookup<ModLiquid>.Register(this);

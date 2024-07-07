@@ -3,4 +3,14 @@ Items: {
 		DisplayName: Exemple Bucket
 		Tooltip: ""
 	}
+
+	ExempleBucket2: {
+		DisplayName: Exemple Bucket2
+		Tooltip: ""
+	}
+
+	ExempleBucket3: {
+		DisplayName: Exemple Bucket3
+		Tooltip: ""
+	}
 }
