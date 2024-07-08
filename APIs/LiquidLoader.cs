@@ -58,7 +58,7 @@ namespace LiquidAPI.APIs
 
             setAValue<float>("DEFAULT_OPACITY", 0.3f);
 
-			Array.Resize(ref LiquidTextureAssets.Liquid, nextLiquid);
+			
 
 			if (!unloading)
             {

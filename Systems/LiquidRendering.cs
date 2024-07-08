@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;
 using Terraria.GameContent;
+using ReLogic.Content;
 
 namespace LiquidAPI.Systems
 {
@@ -21,35 +22,36 @@ namespace LiquidAPI.Systems
 		public override void Load()
 		{
 			instance = this;
-			/*if (!Main.dedServ)
+			if (!Main.dedServ)
 			{
+				InitiateArrays(LiquidID.Count);
 				int[] waterstyles = new int[12] { 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13 };
 				int[] liquidTypes = new int[3] { 1, 11, 14 };
 				for (int type = 0; type < LiquidID.Count; type++)
 				{
-					for (int style = 0; style < (WaterStyleID.Count + 2) - LiquidID.Count; style++)
+					for (int style = 0; style < liquidStyleCount[type]; style++)
 					{
 						if (type == LiquidID.Water)
 						{
 							foreach (int i in waterstyles)
 							{
-								LiquidTextureAssets.Liquid[type][style] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i);
+								LiquidTextureAssets.Liquid[type][style] = LiquidRenderer.Instance._liquidTextures[i];
 							}
 						}
 						else if (style == 0)
 						{
 							foreach (int i in liquidTypes)
 							{
-								LiquidTextureAssets.Liquid[type][style] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i);
+								LiquidTextureAssets.Liquid[type][style] = LiquidRenderer.Instance._liquidTextures[i];
 							}
 						}
 						else
 						{
-							LiquidTextureAssets.Liquid[type][style] = Main.Assets.Request<Texture2D>("Images/Misc/water_0");
+							LiquidTextureAssets.Liquid[type][style] = TextureAssets.MagicPixel;
 						}
 					}
 				}
-			}*/
+			}
 		}
 
 		public override void Unload()
@@ -61,12 +63,60 @@ namespace LiquidAPI.Systems
 
 		public static float[][] liquidAlpha = new float[LiquidID.Count][];
 
+		public static int[] liquidStyleCount = { 11, 1, 1, 1 };
+
 		/// <summary>
 		/// The style of the given liquid. This stores what style is currently loaded for a liquid. <br />
 		/// Allows for more than just water to have styles, even for modded liquids <br />
 		/// Defaults to 0 (default liquid style)
 		/// </summary>
 		public static int[] liquidStyle = new int[LiquidID.Count];
+
+		public static void InitiateArrays(int Count)
+		{
+			liquidAlpha = new float[Count][];
+			LiquidTextureAssets.Liquid = new Asset<Texture2D>[Count][];
+			LiquidTextureAssets.LiquidBlock = new Asset<Texture2D>[Count][];
+			LiquidTextureAssets.LiquidSlope = new Asset<Texture2D>[Count][];
+			if (Count <= liquidStyleCount.Length)
+			{
+				for (int i = 0; i < liquidAlpha.Length; i++)
+				{
+					liquidAlpha[i] = new float[liquidStyleCount[i]];
+				}
+				for (int i = 0; i < LiquidTextureAssets.Liquid.Length; i++)
+				{
+					LiquidTextureAssets.Liquid[i] = new Asset<Texture2D>[liquidStyleCount[i]];
+				}
+				for (int i = 0; i < LiquidTextureAssets.LiquidBlock.Length; i++)
+				{
+					LiquidTextureAssets.LiquidBlock[i] = new Asset<Texture2D>[liquidStyleCount[i]];
+				}
+				for (int i = 0; i < LiquidTextureAssets.LiquidSlope.Length; i++)
+				{
+					LiquidTextureAssets.LiquidSlope[i] = new Asset<Texture2D>[liquidStyleCount[i]];
+				}
+			}
+			else
+			{
+				for (int i = 0; i < liquidAlpha.Length; i++)
+				{
+					liquidAlpha[i] = new float[1];
+				}
+				for (int i = 0; i < LiquidTextureAssets.Liquid.Length; i++)
+				{
+					LiquidTextureAssets.Liquid[i] = new Asset<Texture2D>[1];
+				}
+				for (int i = 0; i < LiquidTextureAssets.LiquidBlock.Length; i++)
+				{
+					LiquidTextureAssets.LiquidBlock[i] = new Asset<Texture2D>[1];
+				}
+				for (int i = 0; i < LiquidTextureAssets.LiquidSlope.Length; i++)
+				{
+					LiquidTextureAssets.LiquidSlope[i] = new Asset<Texture2D>[1];
+				}
+			}
+		}
 
 		public static bool IsLiquidStyleValid(int type, int style)
 		{
@@ -89,7 +139,7 @@ namespace LiquidAPI.Systems
 						liquidStyle[i] = Main.waterStyle;
 						liquidStyle[i] = Main.CalculateWaterStyle();
 					}
-					for (int j = 0; j < liquidAlpha.Count(); j++)
+					for (int j = 0; j < liquidAlpha.Length; j++)
 					{
 						if (IsLiquidStyleValid(j, i))
 						{

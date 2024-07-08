@@ -64,7 +64,8 @@ namespace LiquidAPI.APIs
         public sealed override void SetupContent()
         {
             if(!PatchLoader.DetectPatchedAssembly()) return;
-            LiquidTextureAssets.Liquid[Type][0] = ModContent.Request<Texture2D>(Texture, (AssetRequestMode)2);
+			LiquidRendering.InitiateArrays(Type + 1);
+			LiquidTextureAssets.Liquid[Type][0] = ModContent.Request<Texture2D>(Texture, (AssetRequestMode)2);
 			SetStaticDefaults();
             ModLiquidID.Search.Add(FullName, Type);
 			//LiquidTextureAssets.LiquidSlope[Type][0] = ModContent.Request<Texture2D>(BlockTextur, (AssetRequestMode)2);
